@@ -18,7 +18,8 @@ detector = htm.handDetector(detectionCon=0.7)
 devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
-# print(volume.GetVolumeRange()) #min = -63.5, max = 0
+volRange = volume.GetVolumeRange()
+# print(volume.GetVolumeRange())
 minVol = volRange[0]
 maxVol = volRange[1]
 
