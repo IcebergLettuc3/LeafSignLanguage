@@ -13,25 +13,25 @@ class handDetector():
     self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.detectionCon, self.trackCon)
     self.mpDraw = mp.solutions.drawing_utils
 
-  def findHands(self, img):
+  def findHands(self, img, draw = True):
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = self.hands.process(imgRGB)
     # print(results.multi_hand_landmarks)
 
     if results.multi_hand_landmarks:
       for handLms in results.multi_hand_landmarks:
-        for id, lm in enumerate(handLms.landmark):
-          # print(id, lm)
-          h, w, c = img.shape
-          cx, cy = int(lm.x*w), int(lm.y*h)
-          # print(id, cx, cy)
-          if id == 12:
-            cv2.circle(img, (cx, cy), 20, (255, 0, 255), cv2.FILLED) #this line highlights the tip of the middle finger
-
-        self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
+        if draw:
+          self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
 
 
 
+# for id, lm in enumerate(handLms.landmark):
+#           # print(id, lm)
+#           h, w, c = img.shape
+#           cx, cy = int(lm.x*w), int(lm.y*h)
+#           # print(id, cx, cy)
+#           if id == 12:
+#             cv2.circle(img, (cx, cy), 20, (255, 0, 255), cv2.FILLED) #this line highlights the tip of the middle finger
 
 
 
