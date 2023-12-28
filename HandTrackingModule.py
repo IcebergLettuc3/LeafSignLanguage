@@ -30,15 +30,15 @@ class handDetector():
     lmList = []
     if self.results.multi_hand_landmarks:
       tmp_hand = self.results.multi_hand_landmarks[handNo]
-      for ilm in enumerate(tmp_hand.landmark):
+      for id, lm in enumerate(tmp_hand.landmark):
         # print(id, lm)
         h, w, c = img.shape
         cx, cy = int(lm.x*w), int(lm.y*h)
         # print(id, cx, cy)
-        lmList.append(id, cx, cy)
+        lmList.append([id, cx, cy])
         if id == 12 and draw:
           cv2.circle(img, (cx, cy), 20, (255, 0, 255), cv2.FILLED) #this line highlights the tip of the middle finger
-    return ist
+    return lmList
 
 
 def main():
@@ -49,6 +49,9 @@ def main():
   while True:
     success, img = cap.read()
     img = detector.findHands(img)
+    lmList = detector.findPosition(img)
+    if lmList:
+      print(lmList[0])
 
     cTime = time.time()
     fps = 1/(cTime - pTime)
