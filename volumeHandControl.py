@@ -40,6 +40,10 @@ while True:
 
     length = math.hypot(x2 - x1, y2 - y1)
     # print(length)
+    #hand range: 50 -> 300
+    vol = np.interp(length, [50, 300], [minVol, maxVol])
+    print(vol)
+    volume.SetMasterVolumeLevel(vol, None)
 
     if length < 50:
       cv2.circle(img, (cx, cy), 15, (0, 255, 0), cv2.FILLED)
