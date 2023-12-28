@@ -3,7 +3,7 @@ import mediapipe as mp
 import time
 
 class handDetector():
-  def __init__(self, mode = False, maxHands = 2, modelComp = 1, detectionCon=0.5, trackCon=0.5):
+  def __init__(self, mode = False, maxHands = 2, modelComp = 1, detectionCon = 0.5, trackCon = 0.5):
     self.mode = mode
     self.maxHands = maxHands
     self.modelComp = modelComp
@@ -17,23 +17,28 @@ class handDetector():
 
   def findHands(self, img, draw = True):
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = self.hands.process(imgRGB)
+    self.results = self.hands.process(imgRGB)
     # print(results.multi_hand_landmarks)
 
-    if results.multi_hand_landmarks:
-      for handLms in results.multi_hand_landmarks:
+    if self.results.multi_hand_landmarks:
+      for handLms in self.results.multi_hand_landmarks:
         if draw:
           self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
     return img
-
-
-# for id, lm in enumerate(handLms.landmark):
-#           # print(id, lm)
-#           h, w, c = img.shape
-#           cx, cy = int(lm.x*w), int(lm.y*h)
-#           # print(id, cx, cy)
-#           if id == 12:
-#             cv2.circle(img, (cx, cy), 20, (255, 0, 255), cv2.FILLED) #this line highlights the tip of the middle finger
+  
+  def findPosition(self, img, handNo = 0, draw = True):
+    lmList = []
+    if self.results.multi_hand_landmarks:
+      tmp_hand = self.results.multi_hand_landmarks[handNo]
+      for ilm in enumerate(tmp_hand.landmark):
+        # print(id, lm)
+        h, w, c = img.shape
+        cx, cy = int(lm.x*w), int(lm.y*h)
+        # print(id, cx, cy)
+        lmList.append(id, cx, cy)
+        if id == 12 and draw:
+          cv2.circle(img, (cx, cy), 20, (255, 0, 255), cv2.FILLED) #this line highlights the tip of the middle finger
+    return ist
 
 
 def main():
