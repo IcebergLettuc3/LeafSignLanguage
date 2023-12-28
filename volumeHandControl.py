@@ -43,11 +43,13 @@ while True:
     #hand range: 50 -> 300
     vol = np.interp(length, [50, 300], [minVol, maxVol])
     bar = np.interp(length, [50, 300], [400, 150])
+    percentage = np.interp(length, [50, 300], [0, 100])
     print(vol)
     volume.SetMasterVolumeLevel(vol, None)
 
     cv2.rectangle(img, (50, 150), (85, 400), (0, 255, 0), 3)
-    cv2.rectangle(img, (50, int(bar)), (85, 400), (0, 255, 0), cv2.FILLED)
+    cv2.rectangle(img, (50, int(bar)), (85, 400), (255, 0, 0), cv2.FILLED)
+    cv2.putText(img, f'{int(percentage)} %', (40, 450), cv2.FONT_HERSHEY_COMPLEX, 1, (0,255,0), 3)
 
     if length < 50:
       cv2.circle(img, (cx, cy), 15, (0, 255, 0), cv2.FILLED)
