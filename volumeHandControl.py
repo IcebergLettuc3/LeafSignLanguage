@@ -54,6 +54,8 @@ while True:
     if length < 50:
       cv2.circle(img, (cx, cy), 15, (0, 255, 0), cv2.FILLED)
 
+    
+
 
   cTime = time.time()
   fps = 1/(cTime - pTime)
@@ -61,5 +63,8 @@ while True:
 
   cv2.putText(img, f'FPS: {int(fps)}', (20, 40), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 255), 2 )
   
-  cv2.imshow("Img", img)
+  cv2.imshow("Volume Control", img)
   cv2.waitKey(1)
+  if cv2.getWindowProperty('Volume Control', cv2.WND_PROP_VISIBLE) < 1:
+    print("Exiting application")
+    break
