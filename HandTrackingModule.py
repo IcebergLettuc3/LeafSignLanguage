@@ -3,7 +3,7 @@ import mediapipe as mp
 import time
 
 class handDetector():
-  def __init__(self, mode=False, maxHands=2, detectionCon=0.5, trackCon = 0.5):
+  def __init__(self, mode = False, maxHands = 2, detectionCon = 0.5, trackCon = 0.5):
     self.mode = mode
     self.maxHands = maxHands
     self.detectionCon = detectionCon
@@ -22,7 +22,7 @@ class handDetector():
       for handLms in results.multi_hand_landmarks:
         if draw:
           self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
-
+    return img
 
 
 # for id, lm in enumerate(handLms.landmark):
@@ -34,16 +34,14 @@ class handDetector():
 #             cv2.circle(img, (cx, cy), 20, (255, 0, 255), cv2.FILLED) #this line highlights the tip of the middle finger
 
 
-
-  
-  
-
 def main():
   pTime = 0
   cTime = 0
   cap = cv2.VideoCapture(0)
+  detector = handDetector()
   while True:
     success, img = cap.read()
+    img = detector.findHands(img)
 
     cTime = time.time()
     fps = 1/(cTime - pTime)
@@ -55,3 +53,4 @@ def main():
 
 
 if __name__ == "__main__":
+  main()
