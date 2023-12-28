@@ -42,8 +42,12 @@ while True:
     # print(length)
     #hand range: 50 -> 300
     vol = np.interp(length, [50, 300], [minVol, maxVol])
+    bar = np.interp(length, [50, 300], [400, 150])
     print(vol)
     volume.SetMasterVolumeLevel(vol, None)
+
+    cv2.rectangle(img, (50, 150), (85, 400), (0, 255, 0), 3)
+    cv2.rectangle(img, (50, int(bar)), (85, 400), (0, 255, 0), cv2.FILLED)
 
     if length < 50:
       cv2.circle(img, (cx, cy), 15, (0, 255, 0), cv2.FILLED)
